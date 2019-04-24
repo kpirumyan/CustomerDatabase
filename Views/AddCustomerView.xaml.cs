@@ -1,4 +1,5 @@
-﻿using CustomerDatabase.ViewModels;
+﻿using CustomerDatabase.Models;
+using CustomerDatabase.ViewModels;
 using System.Windows;
 
 namespace CustomerDatabase.Views
@@ -12,6 +13,12 @@ namespace CustomerDatabase.Views
     {
       InitializeComponent();
       DataContext = new AddCustomerViewModel();
+    }
+
+    public AddCustomerView(object param, Mode mode)
+    {
+      InitializeComponent();
+      DataContext = new AddCustomerViewModel(param, mode);
     }
   }
 }

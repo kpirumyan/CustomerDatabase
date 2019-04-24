@@ -31,7 +31,7 @@ namespace CustomerDatabase.ViewModels
     }    
     #endregion
 
-    #region DependencyProperties
+    #region Dependency Properties
 
     public DataRowView SelectedCustomer
     {
@@ -58,15 +58,16 @@ namespace CustomerDatabase.ViewModels
 
     #region Commands
 
-    public static BaseCommand AddCommand { get; set; }
+    public BaseCommand AddCommand { get; set; }
 
     private void ExecuteAddCommand(object obj)
     {
       var addCustomerView = new AddCustomerView();
-      addCustomerView.Show();
+      SelectedCustomer = null;
+      addCustomerView.ShowDialog();
     }
 
-    public static BaseCommand EditCommand { get; set; }
+    public BaseCommand EditCommand { get; set; }
 
     private bool CanExecuteEditCommand(object obj)
     {
@@ -75,9 +76,10 @@ namespace CustomerDatabase.ViewModels
 
     private void ExecuteEditCommand(object obj)
     {
-      var editCustomerView = new AddCustomerView();
+      var editCustomerView = new AddCustomerView(SelectedCustomer, Mode.Edit);
       editCustomerView.Title = "Edit customer";
-      editCustomerView.Show();
+      SelectedCustomer = null;
+      editCustomerView.ShowDialog();
     }
     #endregion
 

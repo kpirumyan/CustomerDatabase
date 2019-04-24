@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:CustomerDatabase.Views"
         xmlns:vm="clr-namespace:CustomerDatabase.ViewModels"
         mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance vm:CustomerListViewModel}" d:DesignHeight="250" d:DesignWidth="400"
+        d:DataContext="{d:DesignInstance vm:AddCustomerViewModel}" d:DesignHeight="250" d:DesignWidth="300"
         Title="Add new customer" Height="260" Width="600" WindowStartupLocation="CenterScreen">
   <Grid>
     <Grid.ColumnDefinitions>
@@ -36,26 +36,32 @@
     </Grid.RowDefinitions>
 
     <Label Grid.Row="1" Grid.Column="1" Content="First name:"/>
-    <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3"/>
+    <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3"
+             Text="{Binding FirstName}"/>
     
     <Label Grid.Row="1" Grid.Column="5" Content="Last name:"/>
-    <TextBox Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="3"/>
+    <TextBox Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="3"
+             Text="{Binding LastName}"/>
 
     <Label Grid.Row="4" Grid.Column="1" Content="Age:"/>
-    <TextBox Grid.Row="5" Grid.Column="1"/>
+    <TextBox Grid.Row="5" Grid.Column="1"
+             Text="{Binding Age}"/>
 
     <Label Grid.Row="4" Grid.Column="3" Content="Passport ID:"/>
-    <TextBox Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3"/>
+    <TextBox Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3"
+             Text="{Binding PassportId}"/>
 
     <Label Grid.Row="4" Grid.Column="7" Content="Sex:"/>
-    <TextBox Grid.Row="5" Grid.Column="7"/>
+    <TextBox Grid.Row="5" Grid.Column="7"
+             Text="{Binding Sex}"/>
 
     <Label Grid.Row="7" Grid.Column="1" Content="Address:"/>
-    <TextBox Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="7"/>
+    <TextBox Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="7"
+             Text="{Binding Address}"/>
 
     <Button Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="3"
-            Content="Save"/>
+            Content="Save" Command="{Binding SaveCommand}"/>
     <Button Grid.Row="10" Grid.Column="5" Grid.ColumnSpan="3"
-            Content="Cancel"/>
+            Content="Cancel" Command="{Binding CancelCommand}"/>
   </Grid>
 </Window>

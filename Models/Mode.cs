@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace CustomerDatabase.Models
 {
-  public enum Sex
+  public enum Mode
   {
-    None,
-    Male,
-    Female
+    Add,
+    Edit
   }
 }

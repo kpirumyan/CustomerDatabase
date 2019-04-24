@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CustomerDatabase.Models
 {
-  public struct Customer
+  public class Customer
   {
     public int Id { get; set; }
     public string FirstName { get; set; }
