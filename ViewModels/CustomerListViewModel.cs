@@ -1,5 +1,7 @@
-﻿using CustomerDatabase.Models;
+﻿using CustomerDatabase.Commands;
+using CustomerDatabase.Models;
 using CustomerDatabase.Services;
+using CustomerDatabase.Views;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -23,8 +25,10 @@ namespace CustomerDatabase.ViewModels
     public CustomerListViewModel()
     {
       _service = new CustomerService();
+      AddCommand = new BaseCommand(ExecuteAddCommand);
+      EditCommand = new BaseCommand(ExecuteEditCommand, CanExecuteEditCommand);
       DisplayTable();
-    }
+    }    
     #endregion
 
     #region DependencyProperties
@@ -49,6 +53,31 @@ namespace CustomerDatabase.ViewModels
         _customers = value;
         NotifyPropertyChanged();
       }
+    }
+    #endregion
+
+    #region Commands
+
+    public static BaseCommand AddCommand { get; set; }
+
+    private void ExecuteAddCommand(object obj)
+    {
+      var addCustomerView = new AddCustomerView();
+      addCustomerView.Show();
+    }
+
+    public static BaseCommand EditCommand { get; set; }
+
+    private bool CanExecuteEditCommand(object obj)
+    {
+      return SelectedCustomer != null;
+    }
+
+    private void ExecuteEditCommand(object obj)
+    {
+      var editCustomerView = new AddCustomerView();
+      editCustomerView.Title = "Edit customer";
+      editCustomerView.Show();
     }
     #endregion
 

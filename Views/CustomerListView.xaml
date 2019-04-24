@@ -26,8 +26,8 @@
       <ColumnDefinition Width="10"/>
     </Grid.ColumnDefinitions>
     
-    <Button Content="Add" Grid.Column="1" Grid.Row="1" Command="{Binding Add}"/>
-    <Button Content="Edit" Grid.Column="3" Grid.Row="1" Command="{Binding Edit}"/>
+    <Button Content="Add" Grid.Column="1" Grid.Row="1" Command="{Binding AddCommand}"/>
+    <Button Content="Edit" Grid.Column="3" Grid.Row="1" Command="{Binding EditCommand}"/>
     <TextBox Grid.Column="5" Grid.Row="1" Padding="5 0"/>
 
     <DataGrid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="7"
