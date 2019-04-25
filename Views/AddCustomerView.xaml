@@ -52,8 +52,8 @@
              Text="{Binding PassportId}"/>
 
     <Label Grid.Row="4" Grid.Column="7" Content="Sex:"/>
-    <TextBox Grid.Row="5" Grid.Column="7"
-             Text="{Binding Sex}"/>
+    <ComboBox Grid.Row="5" Grid.Column="7" x:Name="sexComboBox"
+             SelectedItem="{Binding Sex}"/>
 
     <Label Grid.Row="7" Grid.Column="1" Content="Address:"/>
     <TextBox Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="7"

@@ -22,6 +22,7 @@ namespace CustomerDatabase.Services
     public void ConfigureAdapter(string tableName)
     {
       Adapter = new NpgsqlDataAdapter($"Select * From {tableName}", _connectionString);
+      NpgsqlCommandBuilder builder = new NpgsqlCommandBuilder(Adapter);
     }
   }
 }

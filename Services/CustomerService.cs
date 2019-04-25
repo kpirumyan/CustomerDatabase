@@ -8,36 +8,47 @@ using System.Threading.Tasks;
 
 namespace CustomerDatabase.Services
 {
-  public class CustomerService : ICustomerService
+  public class CustomerService //: ICustomerService
   {
     private readonly IDataService _dataService;
 
     public CustomerService()
     {
       _dataService = new DataService("Customers");
+      Table = new DataTable("Customers");
     }
+
+    public DataTable Table { get; set; }
 
     #region Methods
 
-    public async Task Insert(Customer customer)
+    //public void Insert(Customer customer)
+    //{
+    //  _dataService.Adapter.
+    //}
+
+    public void Update(Customer customer)
     {
-
-    }
-
-    public async Task Update(Customer customer)
-    {
-
+      _dataService.Adapter.Fill(Table);
+      var row = Table.NewRow();
+      row["FirstName"] = customer.FirstName;
+      row["LastName"] = customer.LastName;
+      row["Age"] = customer.Age;
+      row["Sex"] = customer.Sex;
+      row["PassportId"] = customer.PassportId;
+      row["Address"] = customer.Address;
+      Table.Rows.Add(row);
+      _dataService.Adapter.Update(Table);
     }
 
     public DataTable SelectAll()
     {
-      DataTable table = new DataTable("Customers");
-      _dataService.Adapter.Fill(table);
+      _dataService.Adapter.Fill(Table);
 
-      return table;
+      return Table;
     }
 
-    public async Task<ObservableCollection<Customer>> FindByFullName(string str)
+    public DataRowView FindByFullName(string str)
     {
       return null;
     }

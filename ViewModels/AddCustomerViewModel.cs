@@ -1,5 +1,7 @@
 ﻿using CustomerDatabase.Commands;
+using CustomerDatabase.Interfaces;
 using CustomerDatabase.Models;
+using CustomerDatabase.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,6 +25,7 @@ namespace CustomerDatabase.ViewModels
     private string _passportId;
     private string _address;
     private Mode _mode = Mode.Add;
+    private readonly CustomerService _customerService;
     #endregion
 
     #region Constructor
@@ -31,6 +34,7 @@ namespace CustomerDatabase.ViewModels
     {
       SaveCommand = new BaseCommand(ExecuteSaveCommand, CanExecuteSaveCommand);
       CancelCommand = new BaseCommand(ExecuteCancelCommand);
+      _customerService = new CustomerService();
     }
 
     public AddCustomerViewModel(object selectedCustomer, Mode mode) : this()
@@ -126,12 +130,31 @@ namespace CustomerDatabase.ViewModels
 
     private bool CanExecuteSaveCommand(object obj)
     {
-      return false;
+      return true;
     }
 
     private void ExecuteSaveCommand(object obj)
     {
-      throw new NotImplementedException();
+      var customer = new Customer
+      {
+        FirstName = this.FirstName,
+        LastName = this.LastName,
+        Age = this.Age,
+        PassportId = this.PassportId,
+        Sex = this.Sex,
+        Address = this.Address
+      };
+      _customerService.Update(customer);
+
+
+      //if (_mode == Mode.Add)
+      //{
+      //  _customerService.Insert(customer);
+      //}
+      //else
+      //{
+      //  _customerService.Update(customer);
+      //}
     }
 
     public BaseCommand CancelCommand { get; set; }
