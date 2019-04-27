@@ -1,4 +1,5 @@
 ﻿using CustomerDatabase.Commands;
+using CustomerDatabase.Interfaces;
 using CustomerDatabase.Models;
 using CustomerDatabase.Services;
 using CustomerDatabase.Views;
@@ -15,7 +16,7 @@ namespace CustomerDatabase.ViewModels
 
     private DataRowView _selectedCustomer;
     private DataTable _customers;
-    private readonly CustomerService _service;
+    private readonly ICustomerService _service;
     #endregion    
 
     #region Constructors
@@ -25,6 +26,7 @@ namespace CustomerDatabase.ViewModels
       _service = new CustomerService();
       AddCommand = new BaseCommand(ExecuteAddCommand);
       EditCommand = new BaseCommand(ExecuteEditCommand, CanExecuteEditCommand);
+      CustomerSaved += OnCustomerSavedHandler;
       DisplayTable();
     }    
     #endregion
@@ -60,7 +62,8 @@ namespace CustomerDatabase.ViewModels
 
     private void ExecuteAddCommand(object obj)
     {
-      var addCustomerView = new AddCustomerView(Customers.NewRow(), Mode.Add);
+      var handler = CustomerSaved;
+      var addCustomerView = new AddCustomerView(Customers.NewRow(), Mode.Add, handler);
       SelectedCustomer = null;
       addCustomerView.ShowDialog();
     }
@@ -74,11 +77,17 @@ namespace CustomerDatabase.ViewModels
 
     private void ExecuteEditCommand(object obj)
     {
-      var editCustomerView = new AddCustomerView(SelectedCustomer.Row, Mode.Edit);
+      var handler = CustomerSaved;
+      var editCustomerView = new AddCustomerView(SelectedCustomer.Row, Mode.Edit, handler);
       editCustomerView.Title = "Edit customer";
       SelectedCustomer = null;
       editCustomerView.ShowDialog();
     }
+    #endregion
+
+    #region Events
+
+    public event EventHandler CustomerSaved;
     #endregion
 
     #region Methods
@@ -86,6 +95,11 @@ namespace CustomerDatabase.ViewModels
     private void DisplayTable()
     {
       Customers = _service.SelectAll();
+    }
+
+    private void OnCustomerSavedHandler(object sender, EventArgs e)
+    {
+      DisplayTable();
     }
     #endregion
 

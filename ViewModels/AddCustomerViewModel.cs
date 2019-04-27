@@ -11,18 +11,19 @@ namespace CustomerDatabase.ViewModels
   public class AddCustomerViewModel : INotifyPropertyChanged
   {
     #region Fields
-
     private Mode _mode = Mode.Add;
     private DataRow _customer;
     private readonly CustomerService _customerService;
+    private EventHandler _handler;
     #endregion
 
     #region Constructor
 
-    public AddCustomerViewModel(DataRow row, Mode mode)
+    public AddCustomerViewModel(DataRow row, Mode mode, EventHandler handler)
     {
       _customerService = new CustomerService();
       _mode = mode;
+      _handler = handler;
       Customer = row;
       SaveCommand = new BaseCommand(ExecuteSaveCommand, CanExecuteSaveCommand);
       CancelCommand = new BaseCommand(ExecuteCancelCommand);
@@ -62,6 +63,8 @@ namespace CustomerDatabase.ViewModels
       {
         _customerService.Insert(Customer);
       }
+
+      _handler?.Invoke(this, null);
       App.Current.Windows[2].Close();
     }
 
@@ -71,10 +74,6 @@ namespace CustomerDatabase.ViewModels
     {
       App.Current.Windows[2].Close();
     }
-    #endregion
-
-    #region Methods
-
     #endregion
 
     #region INotifyPropertyChanged

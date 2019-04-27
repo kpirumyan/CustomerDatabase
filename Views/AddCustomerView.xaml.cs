@@ -12,10 +12,10 @@ namespace CustomerDatabase.Views
   /// </summary>
   public partial class AddCustomerView : Window
   {
-    public AddCustomerView(DataRow row, Mode mode)
+    public AddCustomerView(DataRow row, Mode mode, EventHandler handler)
     {
       InitializeComponent();
-      DataContext = new AddCustomerViewModel(row, mode);
+      DataContext = new AddCustomerViewModel(row, mode, handler);
       sexComboBox.ItemsSource = Enum.GetValues(typeof(Sex)).Cast<Sex>();
     }
   }

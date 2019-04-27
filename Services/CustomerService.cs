@@ -1,10 +1,5 @@
 ﻿using CustomerDatabase.Interfaces;
-using CustomerDatabase.Models;
-using Npgsql;
-using System.Collections.ObjectModel;
-using System.Configuration;
 using System.Data;
-using System.Threading.Tasks;
 
 namespace CustomerDatabase.Services
 {
@@ -41,6 +36,7 @@ namespace CustomerDatabase.Services
 
     public DataTable SelectAll()
     {
+      Table = new DataTable("Customers");
       _dataService.Adapter.Fill(Table);
 
       return Table;

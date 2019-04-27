@@ -7,8 +7,8 @@
         xmlns:vm="clr-namespace:CustomerDatabase.ViewModels"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance vm:AddCustomerViewModel}" d:DesignHeight="250" d:DesignWidth="300"
-        Title="Add new customer" Height="260" Width="600" WindowStartupLocation="CenterScreen">
-
+        Title="Add new customer" Height="280" Width="600" WindowStartupLocation="CenterScreen">
+  
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="10"/>
@@ -26,7 +26,7 @@
     </Grid.RowDefinitions>
     
     <Grid Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" 
-          DataContext="{Binding Customer}">
+          DataContext="{Binding Customer, Mode=TwoWay}">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="*"/>
         <ColumnDefinition Width="20"/>
@@ -49,7 +49,7 @@
 
       <Label Content="First name:"/>
       <TextBox Grid.Row="1" Grid.ColumnSpan="3"
-             Text="{Binding [FirstName]}"/>
+               Text="{Binding [FirstName]}"/>
 
       <Label Grid.Column="4" Content="Last name:"/>
       <TextBox Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="3"
