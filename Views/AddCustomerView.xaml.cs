@@ -1,6 +1,7 @@
 ﻿using CustomerDatabase.Models;
 using CustomerDatabase.ViewModels;
 using System;
+using System.Data;
 using System.Linq;
 using System.Windows;
 
@@ -11,17 +12,10 @@ namespace CustomerDatabase.Views
   /// </summary>
   public partial class AddCustomerView : Window
   {
-    public AddCustomerView()
+    public AddCustomerView(DataRow row, Mode mode)
     {
       InitializeComponent();
-      DataContext = new AddCustomerViewModel();
-      sexComboBox.ItemsSource = Enum.GetValues(typeof(Sex)).Cast<Sex>();
-    }
-
-    public AddCustomerView(object param, Mode mode)
-    {
-      InitializeComponent();
-      DataContext = new AddCustomerViewModel(param, mode);
+      DataContext = new AddCustomerViewModel(row, mode);
       sexComboBox.ItemsSource = Enum.GetValues(typeof(Sex)).Cast<Sex>();
     }
   }

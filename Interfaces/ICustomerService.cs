@@ -8,13 +8,12 @@ namespace CustomerDatabase.Interfaces
 {
   public interface ICustomerService
   {
-    Task Insert(Customer customer);
+    void Insert(DataRow row);
 
-    Task Update(Customer customer);
+    void Update(DataRow row);
 
-    //Task<ObservableCollection<Customer>> SelectAll();
     DataTable SelectAll();
 
-    Task<ObservableCollection<Customer>> FindByFullName(string str);
+    DataRowView FindByFullName(string str);
   }
 }

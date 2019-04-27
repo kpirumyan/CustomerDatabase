@@ -9,11 +9,12 @@ namespace CustomerDatabase.Services
 {
   public class DataService : IDataService
   {
-    private readonly string _connectionString;
+    //private string _connectionString;
+    public string ConnectionString { get; }
 
     public DataService(string tableName)
     {
-      _connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+      ConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
       ConfigureAdapter(tableName);
     }
 
@@ -21,7 +22,7 @@ namespace CustomerDatabase.Services
 
     public void ConfigureAdapter(string tableName)
     {
-      Adapter = new NpgsqlDataAdapter($"Select * From {tableName}", _connectionString);
+      Adapter = new NpgsqlDataAdapter($"Select * From {tableName}", ConnectionString);
       NpgsqlCommandBuilder builder = new NpgsqlCommandBuilder(Adapter);
     }
   }

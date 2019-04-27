@@ -3,11 +3,9 @@ using CustomerDatabase.Models;
 using CustomerDatabase.Services;
 using CustomerDatabase.Views;
 using System;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 
 namespace CustomerDatabase.ViewModels
 {
@@ -62,7 +60,7 @@ namespace CustomerDatabase.ViewModels
 
     private void ExecuteAddCommand(object obj)
     {
-      var addCustomerView = new AddCustomerView();
+      var addCustomerView = new AddCustomerView(Customers.NewRow(), Mode.Add);
       SelectedCustomer = null;
       addCustomerView.ShowDialog();
     }
@@ -76,7 +74,7 @@ namespace CustomerDatabase.ViewModels
 
     private void ExecuteEditCommand(object obj)
     {
-      var editCustomerView = new AddCustomerView(SelectedCustomer, Mode.Edit);
+      var editCustomerView = new AddCustomerView(SelectedCustomer.Row, Mode.Edit);
       editCustomerView.Title = "Edit customer";
       SelectedCustomer = null;
       editCustomerView.ShowDialog();

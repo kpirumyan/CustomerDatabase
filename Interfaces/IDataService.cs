@@ -9,6 +9,7 @@ namespace CustomerDatabase.Interfaces
 {
   public interface IDataService
   {
+    string ConnectionString { get; }
     NpgsqlDataAdapter Adapter { get; set; }
 
     void ConfigureAdapter(string tableName);

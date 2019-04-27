@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CustomerDatabase.Services
 {
-  public class CustomerService //: ICustomerService
+  public class CustomerService : ICustomerService
   {
     private readonly IDataService _dataService;
 
@@ -22,22 +22,20 @@ namespace CustomerDatabase.Services
 
     #region Methods
 
-    //public void Insert(Customer customer)
-    //{
-    //  _dataService.Adapter.
-    //}
-
-    public void Update(Customer customer)
+    public void Insert(DataRow row)
     {
       _dataService.Adapter.Fill(Table);
-      var row = Table.NewRow();
-      row["FirstName"] = customer.FirstName;
-      row["LastName"] = customer.LastName;
-      row["Age"] = customer.Age;
-      row["Sex"] = customer.Sex;
-      row["PassportId"] = customer.PassportId;
-      row["Address"] = customer.Address;
-      Table.Rows.Add(row);
+      var newRow = Table.NewRow();
+      newRow.ItemArray = row.ItemArray;
+      Table.Rows.Add(newRow);
+      _dataService.Adapter.Update(Table);
+    }
+
+    public void Update(DataRow row)
+    {
+      _dataService.Adapter.Fill(Table);
+      var rowToUpdate = Table.Select($"Id = {row["Id"]}")[0];
+      rowToUpdate.ItemArray = row.ItemArray;
       _dataService.Adapter.Update(Table);
     }
 
