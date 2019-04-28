@@ -83,7 +83,7 @@
     <Compile Include="Interfaces\IDataService.cs" />
     <Compile Include="Models\Mode.cs" />
     <Compile Include="Services\CustomerService.cs" />
-    <Compile Include="Services\DataService.cs" />
+    <Compile Include="Services\NpgsqlDataService.cs" />
     <Compile Include="ViewModels\AddCustomerViewModel.cs" />
     <Compile Include="ViewModels\CustomerListViewModel.cs" />
     <Compile Include="Views\AddCustomerView.xaml.cs">
@@ -106,7 +106,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Sex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

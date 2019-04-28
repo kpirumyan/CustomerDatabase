@@ -8,12 +8,12 @@ using System.Windows;
 
 namespace CustomerDatabase.Services
 {
-  public class DataService : IDataService
+  public class NpgsqlDataService : IDataService
   {
     //private string _connectionString;
     public string ConnectionString { get; }
 
-    public DataService(string tableName)
+    public NpgsqlDataService(string tableName)
     {
       ConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
       ConfigureAdapter(tableName);
@@ -23,7 +23,9 @@ namespace CustomerDatabase.Services
 
     public void ConfigureAdapter(string tableName)
     {
-      Adapter = new NpgsqlDataAdapter($"Select * From {tableName}", ConnectionString);
+      Adapter = new NpgsqlDataAdapter($@"Select * From {tableName} ORDER BY ""FirstName"" ASC", ConnectionString);
+
+      // Check if table exists else create a new table
       if (!IsTableExists())
       {
         CreateTable(tableName);

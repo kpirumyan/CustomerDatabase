@@ -9,7 +9,7 @@ namespace CustomerDatabase.Services
 
     public CustomerService()
     {
-      _dataService = new DataService("Customers");
+      _dataService = new NpgsqlDataService("Customers");
       Table = new DataTable("Customers");
     }
 
