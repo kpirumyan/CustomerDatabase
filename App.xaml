@@ -9,7 +9,7 @@
           <RowDefinition/>
           <RowDefinition/>
         </Grid.RowDefinitions>
-        
+
         <Border BorderThickness="1" BorderBrush="Red">
           <AdornedElementPlaceholder/>
         </Border>
@@ -20,5 +20,14 @@
                    Grid.Row="1" TextWrapping="Wrap"/>
       </Grid>
     </ControlTemplate>
+
+    <Style TargetType="TextBox">
+      <Setter Property="Background" Value="#FFDCFFE1"/>
+    </Style>
+
+    <Style TargetType="Window">
+      <Setter Property="Background" Value="#FF63FF79"/>
+    </Style>
+
   </Application.Resources>
 </Application>

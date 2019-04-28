@@ -6,9 +6,12 @@
         xmlns:local="clr-namespace:CustomerDatabase.Views"
         xmlns:vm="clr-namespace:CustomerDatabase.ViewModels"
         mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance vm:AddCustomerViewModel}" d:DesignHeight="250" d:DesignWidth="300"
-        Title="Add new customer" Height="300" Width="600" WindowStartupLocation="CenterScreen">
-  
+        d:DataContext="{d:DesignInstance vm:AddCustomerViewModel}" 
+        d:DesignHeight="250" d:DesignWidth="300"
+        Style="{StaticResource {x:Type Window}}"
+        Title="Add new customer" Height="300" Width="600" 
+        WindowStartupLocation="CenterScreen">
+
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="10"/>
