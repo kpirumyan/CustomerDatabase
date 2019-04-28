@@ -251,6 +251,15 @@ namespace CustomerDatabase.ViewModels
               msg = "ID format: XX000000";
               HasError = true;
             }
+
+            // Check if Passport Id is unique
+            DataTable table = _customerService.SelectAll();
+            if ((_mode == Mode.Add && table.Select($"PassportId = '{PassportId}'").Length > 0) 
+              || (_mode == Mode.Edit && table.Select($"Id <> {_row["Id"]} AND PassportId = '{PassportId}'").Length > 0))
+            {
+              msg = "ID must be unique";
+              HasError = true;
+            }
             break;
           case "Sex":
             break;
