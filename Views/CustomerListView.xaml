@@ -30,7 +30,8 @@
             Command="{Binding AddCommand}"/>
     <Button Content="Edit" Grid.Column="3" Grid.Row="1" 
             Command="{Binding EditCommand}"/>
-    <TextBox Grid.Column="5" Grid.Row="1" Padding="5 0"/>
+    <TextBox Grid.Column="5" Grid.Row="1" Padding="5 0" 
+             Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"/>
 
     <DataGrid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="7"
               Margin="10" IsReadOnly="True" AutoGenerateColumns="False"

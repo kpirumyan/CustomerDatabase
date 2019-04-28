@@ -16,6 +16,8 @@ namespace CustomerDatabase.ViewModels
 
     private DataRowView _selectedCustomer;
     private DataTable _customers;
+    private string _search;
+    private DataTable _allCustomers;
     private readonly ICustomerService _service;
     #endregion    
 
@@ -27,8 +29,9 @@ namespace CustomerDatabase.ViewModels
       AddCommand = new BaseCommand(ExecuteAddCommand);
       EditCommand = new BaseCommand(ExecuteEditCommand, CanExecuteEditCommand);
       CustomerSaved += OnCustomerSavedHandler;
-      DisplayTable();
-    }    
+      _allCustomers = _service.SelectAll();
+      DisplayAllTable();
+    }
     #endregion
 
     #region Dependency Properties
@@ -51,6 +54,18 @@ namespace CustomerDatabase.ViewModels
       set
       {
         _customers = value;
+        NotifyPropertyChanged();
+      }
+    }
+
+    public string Search
+    {
+      get => _search;
+
+      set
+      {
+        _search = value;
+        DisplayFilteredTable();
         NotifyPropertyChanged();
       }
     }
@@ -80,8 +95,8 @@ namespace CustomerDatabase.ViewModels
       var handler = CustomerSaved;
       var editCustomerView = new AddCustomerView(SelectedCustomer.Row, Mode.Edit, handler);
       editCustomerView.Title = "Edit customer";
-      SelectedCustomer = null;
       editCustomerView.ShowDialog();
+      SelectedCustomer = null;
     }
     #endregion
 
@@ -92,14 +107,34 @@ namespace CustomerDatabase.ViewModels
 
     #region Methods
 
-    private void DisplayTable()
+    private void DisplayAllTable()
     {
-      Customers = _service.SelectAll();
+      Customers = _allCustomers;
+    }
+
+    private void DisplayFilteredTable()
+    {
+      //Customers = _allCustomers.Select($"FirstName LIKE '%{Search}%' OR LastName LIKE '%{Search}%'").
+      DataRow[] rows = _allCustomers.Select($"FirstName LIKE '%{Search}%' OR LastName LIKE '%{Search}%'");
+      if(rows.Length > 0)
+      {
+        Customers = rows.CopyToDataTable();
+      }
+      else
+      {
+        Customers = _allCustomers.Copy();
+        Customers.Rows.Clear();
+      }
     }
 
     private void OnCustomerSavedHandler(object sender, EventArgs e)
     {
-      DisplayTable();
+      _allCustomers = _service.SelectAll();
+
+      if (string.IsNullOrEmpty(Search))
+        DisplayAllTable();
+      else
+        DisplayFilteredTable();
     }
     #endregion
 

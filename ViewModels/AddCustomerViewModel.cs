@@ -18,7 +18,7 @@ namespace CustomerDatabase.ViewModels
     private string _age;
     private string _passportId;
     private string _sex;
-    public bool _hasError;
+    private bool _hasError;
     private string _address;
     private DataRow _row;
     private readonly CustomerService _customerService;
