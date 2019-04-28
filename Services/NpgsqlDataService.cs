@@ -10,7 +10,6 @@ namespace CustomerDatabase.Services
 {
   public class NpgsqlDataService : IDataService
   {
-    //private string _connectionString;
     public string ConnectionString { get; }
 
     public NpgsqlDataService(string tableName)

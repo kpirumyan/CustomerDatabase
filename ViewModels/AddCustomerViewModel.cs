@@ -12,6 +12,7 @@ namespace CustomerDatabase.ViewModels
   public class AddCustomerViewModel : INotifyPropertyChanged, IDataErrorInfo
   {
     #region Fields
+
     private Mode _mode = Mode.Add;
     private string _firstName;
     private string _lastName;
@@ -33,7 +34,11 @@ namespace CustomerDatabase.ViewModels
       _mode = mode;
       _handler = handler;
       _row = row;
+
+      // Set form fields default values by initializing dependency properties 
       InitProperties(_row);
+
+      // Register command handlers
       SaveCommand = new BaseCommand(ExecuteSaveCommand, CanExecuteSaveCommand);
       CancelCommand = new BaseCommand(ExecuteCancelCommand);
     }
@@ -106,6 +111,8 @@ namespace CustomerDatabase.ViewModels
         NotifyPropertyChanged();
       }
     }
+
+    // This property will being used to enable or disable 'Save' button depending on the validation
     public bool HasError
     {
       get { return _hasError; }
@@ -120,6 +127,7 @@ namespace CustomerDatabase.ViewModels
 
     #region Methods
 
+    // Converts DataRow to separated dependency properties for binding and validation
     private void InitProperties(DataRow row)
     {
       FirstName = row["FirstName"].ToString();
@@ -130,6 +138,7 @@ namespace CustomerDatabase.ViewModels
       Address = row["Address"].ToString();
     }
 
+    // Builds DataRow from dependency properties for database insert or update commands usage
     private DataRow BuildDataRow()
     {
       _row["FirstName"] = FirstName;
@@ -147,6 +156,8 @@ namespace CustomerDatabase.ViewModels
 
     public BaseCommand SaveCommand { get; set; }
 
+    // Enables 'Save' button when FirstName, LastName and PassportId fields are not empty 
+    // and there are no validation errors.
     private bool CanExecuteSaveCommand(object obj)
     {
       if (string.IsNullOrEmpty(FirstName)
@@ -173,7 +184,10 @@ namespace CustomerDatabase.ViewModels
         _customerService.Insert(row);
       }
 
+      // Invoke CustomerSaved event handler
       _handler?.Invoke(this, null);
+
+      // Close child window
       App.Current.Windows[2].Close();
     }
 
@@ -181,6 +195,7 @@ namespace CustomerDatabase.ViewModels
 
     private void ExecuteCancelCommand(object obj)
     {
+      // Close child window
       App.Current.Windows[2].Close();
     }
     #endregion
@@ -197,6 +212,7 @@ namespace CustomerDatabase.ViewModels
 
     #region IDataErrorInfo
 
+    // The property will not be used
     public string Error
     {
       get
@@ -205,6 +221,7 @@ namespace CustomerDatabase.ViewModels
       }
     }
 
+    // Validation rules
     public string this[string columnName]
     {
       get
@@ -219,6 +236,7 @@ namespace CustomerDatabase.ViewModels
           case "LastName":
             break;
           case "Age":
+            // Validation fails if 'Age' field contains more than 3 digits
             if (Age != null && Age.Length > 3)
             {
               msg = "Max length = 3";
@@ -226,6 +244,7 @@ namespace CustomerDatabase.ViewModels
             }
             break;
           case "PassportId":
+            // Validation fails if input format does not match to 'XX000000'
             var regex = new Regex(@"^[a-zA-Z]{2}\d{6}$");
             if (!string.IsNullOrEmpty(PassportId) && !regex.IsMatch(PassportId))
             {

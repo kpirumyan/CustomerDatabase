@@ -26,8 +26,11 @@ namespace CustomerDatabase.ViewModels
     public CustomerListViewModel()
     {
       _service = new CustomerService();
+
+      // Register command handlers
       AddCommand = new BaseCommand(ExecuteAddCommand);
       EditCommand = new BaseCommand(ExecuteEditCommand, CanExecuteEditCommand);
+
       CustomerSaved += OnCustomerSavedHandler;
       _allCustomers = _service.SelectAll();
       DisplayAllTable();
@@ -47,6 +50,8 @@ namespace CustomerDatabase.ViewModels
       }
     }
 
+    // This is an active DataTable property which depends on search filter.
+    // If the filter is empty than table is equal to _allCustomers table.
     public DataTable Customers
     {
       get => _customers;
@@ -79,8 +84,8 @@ namespace CustomerDatabase.ViewModels
     {
       var handler = CustomerSaved;
       var addCustomerView = new AddCustomerView(Customers.NewRow(), Mode.Add, handler);
-      SelectedCustomer = null;
       addCustomerView.ShowDialog();
+      SelectedCustomer = null;
     }
 
     public BaseCommand EditCommand { get; set; }
@@ -114,19 +119,22 @@ namespace CustomerDatabase.ViewModels
 
     private void DisplayFilteredTable()
     {
-      //Customers = _allCustomers.Select($"FirstName LIKE '%{Search}%' OR LastName LIKE '%{Search}%'").
+      // Filter rows by search field value
       DataRow[] rows = _allCustomers.Select($"FirstName LIKE '%{Search}%' OR LastName LIKE '%{Search}%'");
-      if(rows.Length > 0)
+
+      // If rows have found then display filtered table else display empty table
+      if (rows.Length > 0)
       {
         Customers = rows.CopyToDataTable();
       }
       else
       {
         Customers = _allCustomers.Copy();
-        Customers.Rows.Clear();
+        Customers.Clear();
       }
     }
 
+    // This event hadler will being called on 'save' button click
     private void OnCustomerSavedHandler(object sender, EventArgs e)
     {
       _allCustomers = _service.SelectAll();

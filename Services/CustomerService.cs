@@ -36,15 +36,10 @@ namespace CustomerDatabase.Services
 
     public DataTable SelectAll()
     {
-      Table = new DataTable("Customers");
+      Table.Clear();
       _dataService.Adapter.Fill(Table);
 
       return Table;
-    }
-
-    public DataRowView FindByFullName(string str)
-    {
-      return null;
     }
     #endregion
   }

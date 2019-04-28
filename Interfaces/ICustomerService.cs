@@ -13,7 +13,5 @@ namespace CustomerDatabase.Interfaces
     void Update(DataRow row);
 
     DataTable SelectAll();
-
-    DataRowView FindByFullName(string str);
   }
 }
